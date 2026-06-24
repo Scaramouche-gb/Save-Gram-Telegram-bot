@@ -52,7 +52,7 @@ async def download_and_send_video(message: types.Message, state: FSMContext, url
         }
 
     try:
-        file_path = await ydl_service.download_video(url, yt_opts)
+        file_path = await ydl_service.download_video(url, yt_opts, platform='youtube')
         if selected_format == 'mp3':
             # ydl_service might return the original file path before extension change,
             # so we explicitly check for the .mp3 version

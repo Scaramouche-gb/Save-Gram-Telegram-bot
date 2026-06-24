@@ -10,6 +10,7 @@ from middlewares.subscribe import SubscribeMiddleware
 
 # Import routers from the handlers folder
 from handlers import common, downloader, callbacks, pinterest
+from services.ydl_service import ydl_service
 
 async def main():
     # 1. Launching the logger
@@ -36,6 +37,8 @@ async def main():
     logger.info("Бот успешно запущен и готов к работе!")
     try:
         await bot.delete_webhook(drop_pending_updates=True)
+        # Start the ydl worker queue in the background
+        asyncio.create_task(ydl_service.worker())
         await dp.start_polling(bot)
     except Exception as e:
         logger.exception(f"Критическая ошибка при работе бота: {e}")

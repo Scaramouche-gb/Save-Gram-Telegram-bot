@@ -22,7 +22,7 @@ async def download_and_send_video(message: types.Message, state: FSMContext):
     }
 
     try:
-        file_path = await ydl_service.download_video(url, tiktok_opts)
+        file_path = await ydl_service.download_video(url, tiktok_opts, platform='tiktok')
 
         if file_path and os.path.exists(file_path):
         
@@ -31,10 +31,9 @@ async def download_and_send_video(message: types.Message, state: FSMContext):
             
             await message.answer_video(
                 video=FSInputFile(file_path),
-                caption=caption_templateYt,
-                parse_mode="Markdown" 
-            )
-            
+                caption=caption_template,
+                parse_mode="Markdown"
+            )            
             await status_msg.delete()
            
             os.remove(file_path)

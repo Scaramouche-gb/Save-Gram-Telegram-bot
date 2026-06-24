@@ -25,7 +25,7 @@ async def download_and_send_video(message: types.Message, state: FSMContext):
 
     try:
         # We call the universal service (it will return the exact path to the file with the UUID)
-        file_path = await ydl_service.download_video(url, instagram_opts)
+        file_path = await ydl_service.download_video(url, instagram_opts, platform='instagram')
 
         if file_path and os.path.exists(file_path):
             # Use a single signature template from config.py
